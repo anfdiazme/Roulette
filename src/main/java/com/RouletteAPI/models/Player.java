@@ -33,7 +33,6 @@ public class Player {
 	public void setBet(String bet) {
 		Bet = bet;
 	}
-	
 	public String getStatus() {
 		return status;
 	}
