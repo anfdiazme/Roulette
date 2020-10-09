@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import com.RouletteAPI.models.*;
+import com.prueba2.model.roulette;
 import com.RouletteAPI.control.PlayerController;
 import com.RouletteAPI.control.RouletteController;
 @RestController
@@ -20,10 +21,14 @@ public class RouletteRest {
 	private PlayerController playerControl ;
 	@PostMapping("/addroulette")
 	public Integer saveroulette() {
-		Roulette roulertte= new Roulette();
+		Roulette roulette= new Roulette();
 		int id = (int) (rouletteControl.count()+1);
-		roulertte.setIdRoulette(id);
-		rouletteControl.save(roulertte);
-		return  roulertte.getIdRoulette();
+		roulette.setIdRoulette(id);
+		rouletteControl.save(roulette);
+		return  roulette.getIdRoulette();
+	}
+	@GetMapping("/findAllroulette")
+	public List<Roulette> getRoulette() {
+	return rouletteControl.findAll();
 	}	
 }
