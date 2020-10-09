@@ -49,4 +49,22 @@ public class RouletteRest {
 		playerControl.save(player);
 		return "Successful petition";
 	} 
+	@GetMapping("/close/{id}")
+	public List< Player > closeRoulette(@PathVariable int id){
+		rouletteControl.deleteById(id);
+		Roulette roulette = new Roulette ( id , "close" ) ; 
+		int number = roulette.generatorNumber() ; 
+		List < Player > games = playerControl.findAll() ; 
+		playerControl.deleteAll();
+		List < Player > PlayerResults = new ArrayList < Player> ( ) ; 
+		for (  Player x : games ) {
+			if ( x.getStatus().equals("Open") && x.getIdRoulette() == id  ) {
+				x.calculatorPrice(number);
+				x.setStatus("Finish");
+				PlayerResults.add(x);
+			}
+			playerControl.save( x ) ; 
+		}
+		return PlayerResults ; 
+	}
 }
