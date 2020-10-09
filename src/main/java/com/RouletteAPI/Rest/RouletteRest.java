@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import com.RouletteAPI.models.*;
-import com.prueba2.model.roulette;
 import com.RouletteAPI.control.PlayerController;
 import com.RouletteAPI.control.RouletteController;
 @RestController
@@ -30,5 +29,14 @@ public class RouletteRest {
 	@GetMapping("/findAllroulette")
 	public List<Roulette> getRoulette() {
 	return rouletteControl.findAll();
-	}	
+	}
+	@PutMapping("/update/{id}")
+	public String Openroulette1(@PathVariable int id) {
+		if ( rouletteControl.count() < id || id <= 0  ) {
+			return "Denied" ; 
+		}
+		rouletteControl.deleteById(id);
+		rouletteControl.save( new Roulette ( id , "open" ) ) ;
+		return "Successful";
+	}
 }
