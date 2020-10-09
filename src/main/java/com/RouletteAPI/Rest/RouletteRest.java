@@ -33,10 +33,20 @@ public class RouletteRest {
 	@PutMapping("/update/{id}")
 	public String Openroulette1(@PathVariable int id) {
 		if ( rouletteControl.count() < id || id <= 0  ) {
-			return "Denied" ; 
+			return "Denied petition" ; 
 		}
 		rouletteControl.deleteById(id);
 		rouletteControl.save( new Roulette ( id , "open" ) ) ;
-		return "Successful";
+		return "Successful petition";
 	}
+	@PostMapping("/bet")
+	public String betplayer(@RequestBody Player player) {
+		if(Integer.parseInt(player.getBet())<0||Integer.parseInt(player.getBet())>36){
+			return "denied petition";
+		}else if(player.getMoney()<0||player.getMoney()>10000) {
+			return "denied petition";
+		} 
+		playerControl.save(player);
+		return "Successful petition";
+	} 
 }
